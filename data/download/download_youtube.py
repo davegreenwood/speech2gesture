@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 
 import argparse
 from subprocess import call
@@ -27,7 +27,7 @@ temp_output_path = '/tmp/temp_video.mp4'
 for _, row in tqdm(df.iterrows(), total=df.shape[0]):
 
     i, name, link = row
-    if 'youtube' in link:
+    if 'youtube' in link or "mtvnservices" in link:
         try:
             output_path = os.path.join(BASE_PATH, row["speaker"], "videos", row["video_fn"])
             if not (os.path.exists(os.path.dirname(output_path))):
@@ -41,7 +41,7 @@ for _, row in tqdm(df.iterrows(), total=df.shape[0]):
                 res2 = call('ffmpeg -i "%s" -r 30000/1001 -strict -2 "%s" -y' % (temp_output_path, output_path),
                             shell=True)
         except Exception as e:
-            print e
+            print(e)
         finally:
             if os.path.exists(temp_output_path):
                 os.remove(temp_output_path)
