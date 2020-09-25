@@ -22,7 +22,10 @@ df = pd.read_csv(os.path.join(BASE_PATH, "videos_links.csv"))
 if args.speaker:
     df = df[df['speaker'] == args.speaker]
 
-temp_output_path = '/tmp/temp_video.mp4'
+temp = os.path.expanduser("~/tmp/")
+os.makedirs(temp, exist_ok=True)
+temp_output_path = os.path.join(temp, "temp_video.mp4")
+
 
 for _, row in tqdm(df.iterrows(), total=df.shape[0]):
 
